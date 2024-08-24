@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -23,4 +24,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/tes', [QuestionController::class, 'index'])->name('tes');
-Route::post('/tes', [QuestionController::class, 'store'])->name('result');
+Route::post('/tes', [AnswersController::class, 'store'])->name('result');

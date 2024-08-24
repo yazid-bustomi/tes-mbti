@@ -60,6 +60,7 @@
 
             <form action="{{ route('result') }}" method="post">
                 @csrf
+                <input type="number" name="user_id" value="{{ Auth::user()->id }}" hidden>
                 @foreach ($questions as $data)
                     <div class="timeline-panel text-center mb-5 p-4 bg-light rounded question-page"
                         id="question-{{ $data->id }}">
@@ -88,7 +89,12 @@
                         onclick="changePage(-1)">Previous</button>
                     <button type="button" class="btn btn-secondary" id="nextBtn"
                         onclick="changePage(1)">Next</button>
-                    <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn">Submit</button>
+                       @auth
+                       <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn">Submit</button>
+                     @else
+                     <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn" disabled>Submit</button>
+
+                       @endauth
                 </div>
             </form>
         </div>

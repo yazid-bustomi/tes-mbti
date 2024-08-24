@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Question;
 use Illuminate\Http\Request;
 
-class QuestionController extends Controller
+class AnswersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::all();
-        return view('tes', compact('questions'));
+        //
     }
 
     /**
@@ -37,6 +35,9 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         //
+
+        dd($request->toArray());
+
     }
 
     /**

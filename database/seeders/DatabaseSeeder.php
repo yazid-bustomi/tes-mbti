@@ -18,13 +18,13 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Yazid',
-                'nim' => 'admin',
+                'email' => 'bustomi@gmail.com',
                 'password' => Hash::make('123'),
                 'role' => 'admin'
             ],
             [
-                'name' => 'mhs1',
-                'nim' => '11',
+                'name' => 'mhs@gmail.com',
+                'email' => '11',
                 'password' => Hash::make('123'),
                 'role' => 'mahasiswa'
             ]
