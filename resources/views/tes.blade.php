@@ -60,7 +60,9 @@
 
             <form action="{{ route('result') }}" method="post">
                 @csrf
-                <input type="number" name="user_id" value="{{ Auth::user()->id }}" hidden>
+                @auth
+                    <input type="number" name="user_id" value="{{ Auth::user()->id }}" hidden>
+                @endauth
                 @foreach ($questions as $data)
                     <div class="timeline-panel text-center mb-5 p-4 bg-light rounded question-page"
                         id="question-{{ $data->id }}">
@@ -80,7 +82,7 @@
 
                             <label class="text-danger fs-5 mb-0 ms-2">Tidak Setuju</label>
                         </div>
-                        <input type="hidden" name="answers[]" id="answer-{{ $data->id }}" value="">
+                        <input type="hidden" name="answers[{{ $data->id }}]" id="answer-{{ $data->id }}" value="">
                     </div>
                 @endforeach
 
@@ -89,12 +91,11 @@
                         onclick="changePage(-1)">Previous</button>
                     <button type="button" class="btn btn-secondary" id="nextBtn"
                         onclick="changePage(1)">Next</button>
-                       @auth
-                       <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn">Submit</button>
-                     @else
-                     <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn" disabled>Submit</button>
-
-                       @endauth
+                    @auth
+                        <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn">Submit</button>
+                    @else
+                        <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn" disabled>Submit</button>
+                    @endauth
                 </div>
             </form>
         </div>
@@ -143,7 +144,6 @@
             </form>
         </div>
     </section>
-
 
     <!-- Footer-->
     <footer class="footer py-4">
@@ -262,6 +262,7 @@
             }
 
             nextBtn.disabled = !allAnswered;
+            submitBtn.disabled = !allAnswered;
         }
 
         showPage(currentPage);
@@ -290,7 +291,6 @@
             window.open(whatsappURL, '_blank');
         });
     </script>
-
 
     <style>
         .selectable-circle {

@@ -17,25 +17,25 @@ class QuestionSeeder extends Seeder
         // Dimensi E/I
         DB::table('questions')->insert([
             ['question' => 'Saya lebih memilih berkomunikasi dengan berbicara.', 'dimension' => 'E/I'],
-            ['question' => 'Saya menemukan dan mengembangkan ide dengan mendiskusikannya.', 'dimension' => 'E/I'],
-            ['question' => 'Saya berorientasi pada dunia eksternal (kegiatan, orang).', 'dimension' => 'E/I'],
-            ['question' => 'Saya fokus pada banyak hobi secara luas dan umum.', 'dimension' => 'E/I'],
-            ['question' => 'Saya bersifat sosial dan ekspresif.', 'dimension' => 'E/I'],
-            ['question' => 'Bertemu orang dan aktivitas sosial membuat saya bersemangat.', 'dimension' => 'E/I'],
-            ['question' => 'Beraktivitas sendirian di rumah membuat saya merasa bosan.', 'dimension' => 'E/I'],
-            ['question' => 'Saya memiliki inisiatif tinggi hampir dalam segala hal, meskipun tidak berhubungan langsung dengan saya.', 'dimension' => 'E/I'],
-            ['question' => 'Saya lebih memilih tempat yang ramai dan banyak interaksi atau aktivitas.', 'dimension' => 'E/I'],
-            ['question' => 'Saya berani bertindak tanpa berpikir terlalu lama.', 'dimension' => 'E/I'],
-            ['question' => 'Saya suka mengekspresikan semangat saya.', 'dimension' => 'E/I'],
-            ['question' => 'Saya lebih suka berkomunikasi dengan sekelompok orang.', 'dimension' => 'E/I'],
-            ['question' => 'Saya lebih suka komunikasi langsung (tatap muka).', 'dimension' => 'E/I'],
-            ['question' => 'Saya membangun ide saat berbicara.', 'dimension' => 'E/I'],
-            ['question' => 'Saya spontan, mudah bergaul, dan fleksibel.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya menemukan dan mengembangkan ide dengan mendiskusikannya.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya berorientasi pada dunia eksternal (kegiatan, orang).', 'dimension' => 'E/I'],
+            // ['question' => 'Saya fokus pada banyak hobi secara luas dan umum.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya bersifat sosial dan ekspresif.', 'dimension' => 'E/I'],
+            // ['question' => 'Bertemu orang dan aktivitas sosial membuat saya bersemangat.', 'dimension' => 'E/I'],
+            // ['question' => 'Beraktivitas sendirian di rumah membuat saya merasa bosan.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya memiliki inisiatif tinggi hampir dalam segala hal, meskipun tidak berhubungan langsung dengan saya.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya lebih memilih tempat yang ramai dan banyak interaksi atau aktivitas.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya berani bertindak tanpa berpikir terlalu lama.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya suka mengekspresikan semangat saya.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya lebih suka berkomunikasi dengan sekelompok orang.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya lebih suka komunikasi langsung (tatap muka).', 'dimension' => 'E/I'],
+            // ['question' => 'Saya membangun ide saat berbicara.', 'dimension' => 'E/I'],
+            // ['question' => 'Saya spontan, mudah bergaul, dan fleksibel.', 'dimension' => 'E/I'],
         ]);
 
         // Dimensi N/S
-        // DB::table('questions')->insert([
-        //     ['question' => 'Saya lebih suka bergerak dari gambaran umum ke detail saat mengerjakan sesuatu.', 'dimension' => 'N/S'],
+        DB::table('questions')->insert([
+            ['question' => 'Saya lebih suka bergerak dari gambaran umum ke detail saat mengerjakan sesuatu.', 'dimension' => 'N/S'],
         //     ['question' => 'Saya sering berbicara mengenai visi masa depan dan konsep-konsep yang berkaitan dengan visi tersebut.', 'dimension' => 'N/S'],
         //     ['question' => 'Saya menggunakan imajinasi dan perenungan sebagai pedoman utama dalam pengambilan keputusan.', 'dimension' => 'N/S'],
         //     ['question' => 'Saya merasa lebih nyaman dengan cara yang bebas dan dinamis dalam menyelesaikan tugas.', 'dimension' => 'N/S'],
@@ -50,10 +50,10 @@ class QuestionSeeder extends Seeder
         //     ['question' => 'Saya lebih memilih cara-cara unik dan inovatif daripada yang sudah umum dipraktekkan orang lain.', 'dimension' => 'N/S'],
         //     ['question' => 'Saya lebih suka memikirkan konsep-konsep besar sebelum memperhatikan rincian kecil.', 'dimension' => 'N/S'],
         //     ['question' => 'Saya merasa lebih terinspirasi oleh visi masa depan daripada oleh fakta-fakta yang ada saat ini.', 'dimension' => 'N/S'],
-        // ]);
+        ]);
 
         // Dimensi T/F
-        // DB::table('questions')->insert([
+        DB::table('questions')->insert([
         //     ['question' => 'Saya lebih cenderung untuk bersikap objektif dalam situasi apapun.', 'dimension' => 'T/F'],
         //     ['question' => 'Saya merasa yakin dengan penjelasan yang logis dan masuk akal.', 'dimension' => 'T/F'],
         //     ['question' => 'Saya berorientasi pada tugas dan job description dalam pekerjaan saya.', 'dimension' => 'T/F'],
@@ -68,12 +68,12 @@ class QuestionSeeder extends Seeder
         //     ['question' => 'Saya menuntut perlakuan yang adil dan sama untuk semua orang.', 'dimension' => 'T/F'],
         //     ['question' => 'Saya lebih mementingkan hubungan sebab-akibat dalam analisis dan keputusan.', 'dimension' => 'T/F'],
         //     ['question' => 'Saya lebih memilih pendekatan yang terstruktur dan sistematis daripada yang fleksibel.', 'dimension' => 'T/F'],
-        //     ['question' => 'Saya merasa penting untuk mengikuti prosedur yang sudah ada daripada mencari cara baru.', 'dimension' => 'T/F'],
-        // ]);
+            ['question' => 'Saya merasa penting untuk mengikuti prosedur yang sudah ada daripada mencari cara baru.', 'dimension' => 'T/F'],
+        ]);
 
         // Dimensi J/P
-        // DB::table('questions')->insert([
-        //     ['question' => 'Saya lebih suka memiliki rencana yang terstruktur dan deadline yang jelas.', 'dimension' => 'J/P'],
+        DB::table('questions')->insert([
+            ['question' => 'Saya lebih suka memiliki rencana yang terstruktur dan deadline yang jelas.', 'dimension' => 'J/P'],
         //     ['question' => 'Saya tidak menyukai situasi yang mendadak dan di luar perencanaan.', 'dimension' => 'J/P'],
         //     ['question' => 'Saya merasa aturan, jadwal, dan target sangat membantu dan memperjelas tindakan.', 'dimension' => 'J/P'],
         //     ['question' => 'Saya merasa nyaman dan lebih efisien jika mengikuti aturan, jadwal, dan target.', 'dimension' => 'J/P'],
@@ -88,6 +88,6 @@ class QuestionSeeder extends Seeder
         //     ['question' => 'Saya percaya bahwa hidup harus diatur dengan baik sejak awal.', 'dimension' => 'J/P'],
         //     ['question' => 'Saya merasa daftar dan checklist adalah panduan penting dalam menjalani aktivitas.', 'dimension' => 'J/P'],
         //     ['question' => 'Saya merasa puas ketika semuanya berjalan sesuai dengan rencana yang telah dibuat.', 'dimension' => 'J/P'],
-        // ]);
+        ]);
     }
 }

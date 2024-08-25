@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnswerRequest;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AnswersController extends Controller
 {
@@ -34,10 +40,23 @@ class AnswersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $allAnswers = $request->get('answers');
+        $countAnswers = count($allAnswers);
 
-        dd($request->toArray());
+        // dd($request->user_id);
+        for ($i = 1; $i <= $countAnswers; $i++) {
+            if (is_null($allAnswers[$i])) {
+                return redirect()->back()->withErrors('Lengkapi semua isi tes')->withInput();
+                break;
+            }
+            Answer::create([
+                'user_id' => $request->user_id,
+                'question_id' => $i,
+                'answer' => $allAnswers[$i],
+            ]);
+        }
 
+        return redirect()->route('home')->with('success', 'Data berhasil di input');
     }
 
     /**

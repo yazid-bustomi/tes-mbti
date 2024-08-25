@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -21,7 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [ResultController::class, 'index'])->name('home');
 
 Route::get('/tes', [QuestionController::class, 'index'])->name('tes');
 Route::post('/tes', [AnswersController::class, 'store'])->name('result');

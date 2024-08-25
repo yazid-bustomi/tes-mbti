@@ -8,14 +8,11 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                        {{ $user }}
-                    {{ __('You are logged in!') }}
+                    @foreach ($user as $data)
+                        @foreach ($data->answer as $use)
+                            {{ $use }}
+                        @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>

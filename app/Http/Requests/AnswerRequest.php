@@ -13,7 +13,7 @@ class AnswerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,14 +24,18 @@ class AnswerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id' => 'required',
+            'quest_id' => 'required',
+            'answer' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            //
+            'user_id.required' => 'User Id wajib di isi',
+            'quest_id.required' => 'Quest harus di isi',
+            'answer' => 'Jawaban harus di isi'
         ];
     }
 }
