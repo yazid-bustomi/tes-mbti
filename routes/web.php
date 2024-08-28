@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\AnswersController;
-use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,9 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::get('/home', [ResultController::class, 'index'])->name('home');
-
-Route::get('/tes', [QuestionController::class, 'index'])->name('tes');
-Route::post('/tes', [AnswersController::class, 'store'])->name('result');
+require __DIR__.'/auth.php';
