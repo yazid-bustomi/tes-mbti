@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Dimension;
 use App\Models\Question;
+use App\Models\Result;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class ResultController extends Controller
 {
@@ -17,7 +20,21 @@ class ResultController extends Controller
      */
     public function index()
     {
-        return view('result');
+        if(Auth::check()){
+            $idUser = Auth::user()->id;
+            $userResult = Result::where('user_id', $idUser)->get();
+
+            View::share('userResult', $userResult);
+        }else{
+            View::share('userResult', null);
+        }
+
+        $userId = Auth::user()->id;
+        $userResult = Result::where('user_id', $userId)->with('dimension')->get();
+        foreach($userResult as $result){
+            $result;
+        }
+        return view('result', compact('result'));
     }
 
     /**
@@ -40,6 +57,7 @@ class ResultController extends Controller
     {
         // Add variable dimensi
         $userId = Auth::user()->id;
+        $userResult = Result::where('user_id' , $userId)->get();
         $dimensionE = 0;
         $dimensionI = 0;
         $dimensionN = 0;
@@ -93,13 +111,45 @@ class ResultController extends Controller
         $mbtiResultJ = round(($dimensionJ / 15) * 100);
         $mbtiResultP = round(($dimensionP / 15) * 100);
 
+        // untuk search dimensi dari 4 kata diatas yang di ambul dari result concat
         $searchDimensi = Dimension::where('dimension', 'like', "{$mbtiResult}%")->get();
+
+        // input data ketika sudah ketemu datanya dari database
         if($searchDimensi->isEmpty()){
             return redirect()->back()->with('error', 'Data Tidak Di Temukan');
         }else{
-            dd($searchDimensi->first()->id);
-
-            // kalau menemukan maka masuk ke dalam else ini
+            // jika masih kosong maka input datanya
+            if($userResult->isEmpty()){
+                DB::table('results')->insert([
+                    'user_id' => $userId,
+                    'dimension_id' => $searchDimensi->first()->id,
+                    'result_type' => $mbtiResult,
+                    'introversion' => $mbtiResultI,
+                    'intuition' => $mbtiResultN,
+                    'thinking' => $mbtiResultT,
+                    'judgement' => $mbtiResultJ,
+                    'extroverted' => $mbtiResultE,
+                    'feeling' => $mbtiResultF,
+                    'sensing' => $mbtiResultS,
+                    'perceiving' => $mbtiResultP,
+                ]);
+                // jika sudah pernah maka update datanya
+            }else{
+                foreach($userResult as $data){
+                    $data->dimension_id = $searchDimensi->first()->id;
+                    $data->result_type = $mbtiResult;
+                    $data->introversion = $mbtiResultI;
+                    $data->intuition = $mbtiResultN;
+                    $data->thinking = $mbtiResultT;
+                    $data->judgement = $mbtiResultJ;
+                    $data->extroverted = $mbtiResultE;
+                    $data->feeling = $mbtiResultF;
+                    $data->sensing = $mbtiResultS;
+                    $data->perceiving = $mbtiResultP;
+                    $data->save();
+                }
+            }
+            return redirect()->route('result.index')->with('success', 'Tes MBTI Berhasil');
         }
     }
 

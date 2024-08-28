@@ -4,12 +4,7 @@
     <!-- Header Start -->
     <div class="container-fluid bg-breadcrumb">
         <div class="container text-center py-5" style="max-width: 900px;">
-            <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Hasil Tes</h4>
-            <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active text-primary">Our offer</li>
-            </ol>
+            <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Hasil Tes MBTI</h4>
         </div>
     </div>
     <!-- Header End -->
@@ -20,41 +15,75 @@
     <div class="container-fluid offer-section py-5">
         <div class="container py-5">
             <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                <h4 class="text-primary">Our Offer</h4>
-                <h1 class="display-5 mb-4">Benefits We offer</h1>
-                <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis
-                    cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt sint
-                    dolorem autem obcaecati, ipsam mollitia hic.
-                </p>
+                <h4 class="text-primary">Hasil Tes</h4>
+                <h1 class="display-5 mb-4">{{ $result->result_type }}</h1>
+                <p class="mb-0">{{ $result->dimension->dimension }}</p>
+                <p class="mb-0">{{ $result->dimension->description }}</p>
             </div>
             <div class="row g-5 align-items-center">
                 <div class="col-xl-5 wow fadeInLeft" data-wow-delay="0.2s">
-                    <div class="nav nav-pills bg-light rounded p-5">
-                        <a class="accordion-link p-4 mb-4">
-                            <h5 class="mb-0">Ekstrover</h5>
-                        </a>
-                        <a class="accordion-link p-4 mb-4">
-                            <h5 class="mb-0">Intuitif</h5>
-                        </a>
-                        <a class="accordion-link p-4 mb-4">
-                            <h5 class="mb-0">Pemikir</h5>
-                        </a>
-                        <a class="accordion-link p-4 mb-0">
-                            <h5 class="mb-0">Penilai</h5>
-                        </a>
+                    <div class="bg-light rounded p-5">
+                        <div class="mb-4">
+                            <h5 class="mb-1">
+                                {{ $result->extroverted > $result->introversion ? 'Extraversion' : 'Introversion' }}</h5>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                    style="width: {{ $result->extroverted > $result->introversion ? $result->extroverted : $result->introversion }}%;"
+                                    aria-valuenow="{{ $result->extroverted > $result->introversion ? $result->extroverted : $result->introversion }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ $result->extroverted > $result->introversion ? $result->extroverted : $result->introversion }}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="mb-1">{{ $result->intuition > $result->sensing ? 'Intuition' : 'Sensing' }}</h5>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                    style="width: {{ $result->intuition > $result->sensing ? $result->intuition : $result->sensing }}%;"
+                                    aria-valuenow="{{ $result->intuition > $result->sensing ? $result->intuition : $result->sensing }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ $result->intuition > $result->sensing ? $result->intuition : $result->sensing }}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="mb-1">{{ $result->thinking > $result->feeling ? 'Thinking' : 'Feeling' }}</h5>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                    style="width: {{ $result->thinking > $result->feeling ? $result->thinking : $result->feeling }}%;"
+                                    aria-valuenow="{{ $result->thinking > $result->feeling ? $result->thinking : $result->feeling }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ $result->thinking > $result->feeling ? $result->thinking : $result->feeling }}%
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">{{ $result->judgement > $result->perceiving ? 'Judging' : 'Perceiving' }}
+                            </h5>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                    style="width: {{ $result->judgement > $result->perceiving ? $result->judgement : $result->perceiving }}%;"
+                                    aria-valuenow="{{ $result->judgement > $result->perceiving ? $result->judgement : $result->perceiving }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ $result->judgement > $result->perceiving ? $result->judgement : $result->perceiving }}%
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="col-xl-7 wow fadeInRight" data-wow-delay="0.4s">
                     <div class="tab-content">
                         <div id="collapseOne" class="tab-pane fade show p-0 active">
                             <div class="row g-4">
                                 <div class="col-md-7">
-                                    <img src="{{ asset('assets/img/offer-1.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ $result->dimension->img }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </div>
                                 <div class="col-md-5">
-                                    <h1 class="display-5 mb-4">INTJ</h1>
-                                    <p class="mb-4">Deskripsi Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, perspiciatis. Repudiandae sequi perspiciatis culpa officia voluptates, debitis nobis at voluptatum.</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                                    <h1 class="display-5 mb-4">{{ $result->dimension->slug }}</h1>
+                                    <p class="mb-4">{{ $result->dimension->career_recommendation }}</p>
+                                    <p class="mb-4">{{ $result->dimension->reason_career }}</p>
                                 </div>
                             </div>
                         </div>

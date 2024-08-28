@@ -108,7 +108,6 @@
         </div>
     </div>
     <!-- About End -->
-
     <!-- All Type MBTI -->
     <div class="container-fluid service pb-5" id="tipeKepribadian">
         <div class="container pb-5">

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dimension;
+use App\Models\Result;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View ;
 
 class HomeController extends Controller
 {
@@ -12,10 +15,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -25,6 +28,15 @@ class HomeController extends Controller
     public function index()
     {
         $dimensions = Dimension::all();
+        if(Auth::check()){
+            $idUser = Auth::user()->id;
+            $userResult = Result::where('user_id', $idUser)->get();
+
+            View::share('userResult', $userResult);
+        }else{
+            View::share('userResult', null);
+        }
+
         return view('home', compact('dimensions'));
     }
 }
