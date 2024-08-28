@@ -19,6 +19,8 @@ class CreateDimensionsTable extends Migration
             $table->longText('description');
             $table->string('career_recommendation');
             $table->longText('reason_career');
+            $table->string('slug');
+            $table->string('img');
             $table->timestamps();
         });
     }

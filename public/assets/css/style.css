@@ -905,7 +905,8 @@
 
 /*** copyright Start ***/
 .copyright {
-    background: var(--bs-dark);
+    border: 1px solid rgba(23, 169, 43, 0.451); /* Customize border color */
+    background-color: #085003;
 }
 /*** copyright end ***/
 

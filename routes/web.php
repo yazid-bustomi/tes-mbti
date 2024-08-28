@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +23,13 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/home/{fragment?}', [HomeController::class, 'index'])->name('user-home');
+Route::get('/question', [QuestionController::class, 'index'])->name('user-question');
+Route::resource('/result', ResultController::class);
+
+Route::get('/tes', function(){
+    return view('tesdata');
+});
 
 require __DIR__.'/auth.php';
