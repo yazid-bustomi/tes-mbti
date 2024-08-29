@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResultController;
@@ -22,6 +23,10 @@ Route::get('/dashboard', function () {
 
 Route::get('/', [HomeController::class, 'index'])->name('user-home');
 Route::get('/question', [QuestionController::class, 'index'])->name('user-question');
+
+// route question
 Route::resource('/result', ResultController::class);
+
+Route::resource('/admin/user', AdminController::class);
 
 require __DIR__.'/auth.php';

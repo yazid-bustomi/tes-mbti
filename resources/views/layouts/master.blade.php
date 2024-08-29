@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('assets/lib/animate/animate.min.css') }}" />
     <link href="{{ asset('assets/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css" />
+
 
 
     <!-- Customized Bootstrap Stylesheet -->
@@ -57,6 +59,8 @@
                                 class="nav-item nav-link {{ Request::routeIs('result.index') ? 'active' : '' }}">Hasil</a>
                         @endif
                     @endauth
+                    <a href="{{ route('user.index') }}"
+                        class="nav-item nav-link {{ Request::routeIs('user.index') ? 'active' : '' }} ">Manajemen</a>
                 </div>
                 @if (Auth::check())
                     <form action="{{ route('logout') }}" method="post">
@@ -110,6 +114,8 @@
     <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
     <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 
 
     <!-- Template Javascript -->

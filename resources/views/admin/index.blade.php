@@ -1,5 +1,1 @@
-@extends('layouts.master')
-
-@section('content')
-    Admin
-@endsection
+https://github.com/puikinsh/kiaalap

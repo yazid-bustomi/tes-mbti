@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreadminRequest;
 use App\Http\Requests\UpdateadminRequest;
 use App\Models\admin;
+use App\Models\Dimension;
+use App\Models\Result;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class AdminController extends Controller
 {
@@ -15,7 +19,17 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $dimensions = Dimension::all();
+        if(Auth::check()){
+            $idUser = Auth::user()->id;
+            $userResult = Result::where('user_id', $idUser)->get();
+
+            View::share('userResult', $userResult);
+        }else{
+            View::share('userResult', null);
+        }
+
+        return view('admin.index');
     }
 
     /**

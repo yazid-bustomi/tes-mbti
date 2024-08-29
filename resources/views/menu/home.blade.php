@@ -108,7 +108,7 @@
             </div>
             <div class="row g-4">
                 @foreach ($dimensions as $dimensi)
-                    <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="service-item">
                             <div class="service-img">
                                 <img src="{{ $dimensi->img }}" class="img-fluid rounded-top w-100" alt="Image">
