@@ -37,6 +37,6 @@ class HomeController extends Controller
             View::share('userResult', null);
         }
 
-        return view('home', compact('dimensions'));
+        return view('menu.home', compact('dimensions'));
     }
 }

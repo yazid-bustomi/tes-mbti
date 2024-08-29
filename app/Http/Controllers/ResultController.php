@@ -34,7 +34,7 @@ class ResultController extends Controller
         foreach($userResult as $result){
             $result;
         }
-        return view('result', compact('result'));
+        return view('menu.result', compact('result'));
     }
 
     /**

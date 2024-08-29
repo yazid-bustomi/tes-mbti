@@ -27,7 +27,7 @@ class QuestionController extends Controller
             View::share('userResult', null);
         }
         $questions = Question::all();
-        return view('question', compact('questions'));
+        return view('menu.question', compact('questions'));
     }
 
     /**
