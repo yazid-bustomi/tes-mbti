@@ -47,17 +47,29 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{ route('user-home') }}" class="nav-item nav-link {{ Request::routeIs('user-home') ? 'active' : '' }}">Home</a>
-                    <a href="{{ route('user-question') }}" class="nav-item nav-link {{ Request::routeIs('user-question') ? 'active' : '' }}">Tes MBTI</a>
+                    <a href="{{ route('user-home') }}"
+                        class="nav-item nav-link {{ Request::routeIs('user-home') ? 'active' : '' }}">Home</a>
+                    <a href="{{ route('user-question') }}"
+                        class="nav-item nav-link {{ Request::routeIs('user-question') ? 'active' : '' }}">Tes MBTI</a>
                     @auth
-                    @if ($userResult->isNotEmpty())
-                    <a href="{{ route('result.index') }}" class="nav-item nav-link {{ Request::routeIs('result.index') ? 'active' : '' }}">Hasil</a>
-                    @endif
+                        @if ($userResult->isNotEmpty())
+                            <a href="{{ route('result.index') }}"
+                                class="nav-item nav-link {{ Request::routeIs('result.index') ? 'active' : '' }}">Hasil</a>
+                        @endif
                     @endauth
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0"><i
-                        class="fa fa-sign-in-alt  me-2"></i>Login
+                @if (Auth::check())
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-danger rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0"><i
+                            class="fa fa-sign-out-alt  me-1"></i>Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}"
+                        class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0"><i
+                            class="fa fa-sign-in-alt  me-1"></i>Login
                     </a>
+                @endif
             </div>
         </nav>
 
@@ -71,9 +83,10 @@
         <div class="container">
             <div class="row g-4 align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-md-0">
-                    <span class="text-body"><a href="#" class="border-bottom text-white"><i
-                                class="fas fa-copyright text-light me-2"></i>YazidBustomi</a>, 2024 Design By <a
-                            class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a> </span>
+                    <span class="text-body">
+                        <a href="https://github.com/yazid-bustomi" target="_blank" class="text-white">
+                            Copyright <i class="fas fa-copyright text-light me-1"></i>YazidBustomi | 2024</a>
+                    </span>
                 </div>
 
             </div>

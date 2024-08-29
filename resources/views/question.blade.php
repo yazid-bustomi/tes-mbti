@@ -50,8 +50,8 @@
                         <input type="number" name="user_id" value="{{ Auth::user()->id }}" hidden>
                     @endauth
                     @foreach ($questions as $data)
-                        <div class="timeline-panel text-center mb-5 p-4 bg-light rounded question-page wow fadeInUp" data-wow-delay="0.2s"
-                            id="question-{{ $data->id }}">
+                        <div class="timeline-panel text-center mb-5 p-4 bg-light rounded question-page wow fadeInUp"
+                            data-wow-delay="0.2s" id="question-{{ $data->id }}">
                             <h4 class="subheading">{{ $data->question }}</h4>
                             <div class="form-group mt-4 d-flex justify-content-center align-items-center">
                                 <label class="text-success fs-5 mb-0 me-2">Setuju</label>
@@ -59,17 +59,17 @@
                                 <div class="form-check form-check-inline mx-3">
                                     <div class="selectable-circle setuju" id="setuju-{{ $data->id }}"
                                         onclick="selectOption('setuju', '{{ $data->id }}')"></div>
-                                    </div>
+                                </div>
 
-                                    <div class="form-check form-check-inline mx-3">
-                                        <div class="selectable-circle tidak_setuju" id="tidak_setuju-{{ $data->id }}"
-                                            onclick="selectOption('tidak_setuju', '{{ $data->id }}')"></div>
-                                        </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <div class="selectable-circle tidak_setuju" id="tidak_setuju-{{ $data->id }}"
+                                        onclick="selectOption('tidak_setuju', '{{ $data->id }}')"></div>
+                                </div>
 
-                                        <label class="text-danger fs-5 mb-0 ms-2">Tidak Setuju</label>
-                                    </div>
-                                    <input type="hidden" name="answers[{{ $data->id }}][{{ $data->dimension }}]" id="answer-{{ $data->id }}"
-                                    value="">
+                                <label class="text-danger fs-5 mb-0 ms-2">Tidak Setuju</label>
+                            </div>
+                            <input type="hidden" name="answers[{{ $data->id }}][{{ $data->dimension }}]"
+                                id="answer-{{ $data->id }}" value="">
                         </div>
                     @endforeach
 
@@ -78,18 +78,18 @@
                             onclick="changePage(-1)">Previous</button>
                         <button type="button" class="btn btn-secondary" id="nextBtn"
                             onclick="changePage(1)">Next</button>
-                        @auth
+                        @if (Auth::check())
                             <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn">Submit</button>
                         @else
-                            <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn" disabled>Submit</button>
-                        @endauth
+                            <button type="submit" class="btn btn-primary ms-5 d-none"
+                                disabled>Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Question End -->
-
 @endsection
 
 
@@ -102,6 +102,7 @@
         const submitBtn = document.getElementById('submitBtn');
         const questionPerPage = 6;
 
+        // show page and pagination
         function showPage(pageIndex) {
             // Hide all questions
             for (let i = 0; i < questions.length; i++) {
@@ -142,6 +143,7 @@
 
         }
 
+        // setting page
         function changePage(direction) {
             currentPage += direction;
 
@@ -156,6 +158,7 @@
             showPage(currentPage);
         }
 
+        // set answer setuju atau tidak
         function selectOption(option, questionId) {
             const setujuElement = document.getElementById('setuju-' + questionId);
             const tidakSetujuElement = document.getElementById('tidak_setuju-' + questionId);
@@ -173,6 +176,7 @@
             checkAnswers()
         }
 
+        // cek jawaban jika sudah terpilih semua bisa next
         function checkAnswers() {
             const start = currentPage * questionPerPage;
             const end = Math.min(start + questionPerPage, questions.length);
