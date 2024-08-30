@@ -33,6 +33,7 @@
             <div class="container-fluid">
                 <div class="row">
 
+                    {{-- Add Mahasiswa --}}
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-5">
                         <div class="sparkline13-list rounded">
                             <div class="form-body">
@@ -169,6 +170,7 @@
                         </div>
                     </div>
 
+                    {{-- Tabel Daftar Mahasiswa --}}
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
@@ -229,12 +231,12 @@
                                                         <td>{{ '-' }}</td>
                                                     @endif
                                                     <td>
-                                                        <button title="Edit"
-                                                            class="rounded btn btn-warning px-2 py-0 me-3"><i
-                                                                class="fas fa-edit pe-1"></i>Edit</button>
-                                                        <button title="Trash"
-                                                            class="rounded btn btn-danger px-2 py-0 "><i
-                                                                class="fas fa-trash pe-1"></i>Delete</button>
+                                                        <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-warning px-2 py-0 me-3">
+                                                            <i class="fas fa-edit pe-1"></i>Edit
+                                                        </a>
+
+                                                        <a href="{{ route('user.destroy', ['user' => $user->id]) }}" class="btn btn-danger px-2 py-0 text-white">
+                                                        <i class="fas fa-trash pe-1 "></i>Delete</a>
                                                     </td>
                                                     @php
                                                         $no++;
