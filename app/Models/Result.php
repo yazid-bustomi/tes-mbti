@@ -13,4 +13,8 @@ class Result extends Model
     {
         return $this->belongsTo(Dimension::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

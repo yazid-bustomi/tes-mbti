@@ -124,13 +124,13 @@ class ResultController extends Controller
                     'user_id' => $userId,
                     'dimension_id' => $searchDimensi->first()->id,
                     'result_type' => $mbtiResult,
-                    'introversion' => $mbtiResultI,
-                    'intuition' => $mbtiResultN,
-                    'thinking' => $mbtiResultT,
-                    'judgement' => $mbtiResultJ,
+                    'introved' => $mbtiResultI,
                     'extroverted' => $mbtiResultE,
-                    'feeling' => $mbtiResultF,
+                    'intuition' => $mbtiResultN,
                     'sensing' => $mbtiResultS,
+                    'thinking' => $mbtiResultT,
+                    'judging' => $mbtiResultJ,
+                    'feeling' => $mbtiResultF,
                     'perceiving' => $mbtiResultP,
                 ]);
                 // jika sudah pernah maka update datanya
@@ -138,13 +138,13 @@ class ResultController extends Controller
                 foreach($userResult as $data){
                     $data->dimension_id = $searchDimensi->first()->id;
                     $data->result_type = $mbtiResult;
-                    $data->introversion = $mbtiResultI;
-                    $data->intuition = $mbtiResultN;
-                    $data->thinking = $mbtiResultT;
-                    $data->judgement = $mbtiResultJ;
+                    $data->introved = $mbtiResultI;
                     $data->extroverted = $mbtiResultE;
-                    $data->feeling = $mbtiResultF;
+                    $data->intuition = $mbtiResultN;
                     $data->sensing = $mbtiResultS;
+                    $data->thinking = $mbtiResultT;
+                    $data->judging = $mbtiResultJ;
+                    $data->feeling = $mbtiResultF;
                     $data->perceiving = $mbtiResultP;
                     $data->save();
                 }

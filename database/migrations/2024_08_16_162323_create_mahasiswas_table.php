@@ -16,7 +16,6 @@ class CreateMahasiswasTable extends Migration
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('name');
             $table->integer('semester')->nullable();
             $table->string('jurusan')->nullable();
             $table->timestamps();

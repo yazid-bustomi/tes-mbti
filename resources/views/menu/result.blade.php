@@ -25,13 +25,13 @@
                     <div class="bg-light rounded p-5">
                         <div class="mb-4">
                             <h5 class="mb-1">
-                                {{ $result->extroverted > $result->introversion ? 'Extraversion' : 'Introversion' }}</h5>
+                                {{ $result->extroverted > $result->introved ? 'Ekstrovert' : 'Introvert' }}</h5>
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar"
-                                    style="width: {{ $result->extroverted > $result->introversion ? $result->extroverted : $result->introversion }}%;"
-                                    aria-valuenow="{{ $result->extroverted > $result->introversion ? $result->extroverted : $result->introversion }}"
+                                    style="width: {{ $result->extroverted > $result->introved ? $result->extroverted : $result->introved }}%;"
+                                    aria-valuenow="{{ $result->extroverted > $result->introved ? $result->extroverted : $result->introved }}"
                                     aria-valuemin="0" aria-valuemax="100">
-                                    {{ $result->extroverted > $result->introversion ? $result->extroverted : $result->introversion }}%
+                                    {{ $result->extroverted > $result->introved ? $result->extroverted : $result->introved }}%
                                 </div>
                             </div>
                         </div>
@@ -58,14 +58,14 @@
                             </div>
                         </div>
                         <div>
-                            <h5 class="mb-1">{{ $result->judgement > $result->perceiving ? 'Judging' : 'Perceiving' }}
+                            <h5 class="mb-1">{{ $result->judging > $result->perceiving ? 'Judging' : 'Perceiving' }}
                             </h5>
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar"
-                                    style="width: {{ $result->judgement > $result->perceiving ? $result->judgement : $result->perceiving }}%;"
-                                    aria-valuenow="{{ $result->judgement > $result->perceiving ? $result->judgement : $result->perceiving }}"
+                                    style="width: {{ $result->judging > $result->perceiving ? $result->judging : $result->perceiving }}%;"
+                                    aria-valuenow="{{ $result->judging > $result->perceiving ? $result->judging : $result->perceiving }}"
                                     aria-valuemin="0" aria-valuemax="100">
-                                    {{ $result->judgement > $result->perceiving ? $result->judgement : $result->perceiving }}%
+                                    {{ $result->judging > $result->perceiving ? $result->judging : $result->perceiving }}%
                                 </div>
                             </div>
                         </div>

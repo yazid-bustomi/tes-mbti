@@ -18,13 +18,13 @@ class CreateResultsTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('dimension_id')->references('id')->on('dimensions')->onDelete('cascade');
             $table->string('result_type');
+            $table->integer('introved');
             $table->integer('extroverted');
-            $table->integer('introversion');
             $table->integer('intuition');
             $table->integer('sensing');
             $table->integer('thinking');
             $table->integer('feeling');
-            $table->integer('judgement');
+            $table->integer('judging');
             $table->integer('perceiving');
             $table->timestamps();
         });
