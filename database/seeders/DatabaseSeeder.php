@@ -23,12 +23,6 @@ class DatabaseSeeder extends Seeder
                 'role' => 'admin'
             ],
             [
-                'name' => 'wildan',
-                'email' => 'wildan@gmail.com',
-                'password' => Hash::make('123'),
-                'role' => 'mahasiswa'
-            ],
-            [
                 'name' => 'Aulia',
                 'email' => 'aulia@gmail.com',
                 'password' => Hash::make('123'),
@@ -112,30 +106,6 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'role' => 'mahasiswa'
             ],
-            [
-                'name' => 'Rizki',
-                'email' => 'rizki@gmail.com',
-                'password' => Hash::make('123'),
-                'role' => 'mahasiswa'
-            ],
-            [
-                'name' => 'Sari',
-                'email' => 'sari@gmail.com',
-                'password' => Hash::make('123'),
-                'role' => 'mahasiswa'
-            ],
-            [
-                'name' => 'Taufik',
-                'email' => 'taufik@gmail.com',
-                'password' => Hash::make('123'),
-                'role' => 'mahasiswa'
-            ],
-            [
-                'name' => 'Umar',
-                'email' => 'umar@gmail.com',
-                'password' => Hash::make('123'),
-                'role' => 'mahasiswa'
-            ]
             ]);
 
         $this->call([

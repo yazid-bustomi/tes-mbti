@@ -58,15 +58,18 @@
                             <a href="{{ route('result.index') }}"
                                 class="nav-item nav-link {{ Request::routeIs('result.index') ? 'active' : '' }}">Hasil</a>
                         @endif
+                        @if (Auth::user()->role == 'admin')
+                            <a href="{{ route('user.index') }}"
+                                class="nav-item nav-link {{ Request::routeIs('user.index') ? 'active' : '' }} ">Manajemen</a>
+                        @endif
                     @endauth
-                    <a href="{{ route('user.index') }}"
-                        class="nav-item nav-link {{ Request::routeIs('user.index') ? 'active' : '' }} ">Manajemen</a>
                 </div>
                 @if (Auth::check())
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
-                        <button type="submit" class="btn btn-danger rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0"><i
-                            class="fa fa-sign-out-alt  me-1"></i>Logout</button>
+                        <button type="submit"
+                            class="btn btn-danger rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0"><i
+                                class="fa fa-sign-out-alt  me-1"></i>Logout</button>
                     </form>
                 @else
                     <a href="{{ route('login') }}"

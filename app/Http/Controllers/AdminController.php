@@ -6,6 +6,9 @@ use App\Models\Result;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 class AdminController extends Controller
@@ -50,7 +53,43 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validation
+        $rules = [
+            'name' => 'required',
+            'email' => 'unique:users,email',
+            'jurusan' => 'required',
+            'semester' => 'required|numeric',
+            'password' => 'required|min:8'
+        ];
+
+        $message = [
+            'name.required' => 'Nama Wajib di Isi',
+            'email.unique' => 'Email atau NIM sudah terdaftar',
+            'jurusan.required' => 'Jurusan wajib di isi',
+            'semester.required' => 'Semester wajib di isi',
+            'semester.numeric' => 'Semester wajib berupa nangka',
+            'password.required' => 'Password wajib di isi',
+            'password.min' => 'Password minimal 8 karakter'
+        ];
+
+        $validated = Validator::make($request->all(),$rules,$message);
+
+        if($validated->fails()){
+            return redirect()->back()->withErrors($validated)->withInput();
+        }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        DB::table('mahasiswas')->insert([
+            'user_id' => $user->id,
+            'semester' => $request->semester,
+            'jurusan' => $request->jurusan,
+        ]);
+
+        return redirect()->route('user.index')->with('success', 'User berhasil di tambahkan');
     }
 
     /**

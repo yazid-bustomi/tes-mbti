@@ -41,6 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $attributes = [
+        'role' => 'mahasiswa', // Ini akan menetapkan nilai default 'admin'
+    ];
 
     public function answer(){
         return $this->hasMany(Answer::class);
