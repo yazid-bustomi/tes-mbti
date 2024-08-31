@@ -47,32 +47,40 @@
                                                         {{ session('success') }}
                                                     </div>
                                                 @endif
-                                                <form action="{{ route('user.store') }}" method="POST"  class="requires-validation" novalidate>
+                                                <form action="{{ route('user.store') }}" method="POST"
+                                                    class="requires-validation" novalidate>
                                                     @csrf
                                                     <div class="col-md-12 mb-1">
-                                                        <input class="form-control rounded @error('name') is-invalid @enderror" type="text" name="name"
-                                                        placeholder="Full Name" value="{{ old('name') }}">
+                                                        <input
+                                                            class="form-control rounded @error('name') is-invalid @enderror"
+                                                            type="text" name="name" placeholder="Full Name"
+                                                            value="{{ old('name') }}">
                                                         @error('name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </div>
 
                                                     <div class="col-md-12 mb-1">
-                                                        <input class="form-control rounded @error('email') is-invalid @enderror" type="email" name="email"
-                                                            placeholder="E-mail Address" value="{{ old('email') }}">
-                                                            @error('email')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
+                                                        <input
+                                                            class="form-control rounded @error('email') is-invalid @enderror"
+                                                            type="email" name="email" placeholder="E-mail Address"
+                                                            value="{{ old('email') }}">
+                                                        @error('email')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="col-md-12 mb-1">
-                                                        <select class="form-select rounded @error('jurusan') is-invalid @enderror" name="jurusan">
+                                                        <select
+                                                            class="form-select rounded @error('jurusan') is-invalid @enderror"
+                                                            name="jurusan">
                                                             <option selected disabled value="">Jurusan</option>
-                                                            <option value="Sistem Teknik Informatika">Sistem Teknik Informatika</option>
+                                                            <option value="Sistem Teknik Informatika">Sistem Teknik
+                                                                Informatika</option>
                                                             <option value="Sistem Informasi">Sistem Informasi</option>
                                                             <option value="Akutansi">Akutansi</option>
                                                         </select>
@@ -84,23 +92,27 @@
                                                     </div>
 
                                                     <div class="col-md-12 mb-1">
-                                                        <input class="form-control rounded @error('semester') is-invalid @enderror" type="number" name="semester"
-                                                            placeholder="Semester" value="{{ old('semester') }}">
-                                                            @error('semester')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
+                                                        <input
+                                                            class="form-control rounded @error('semester') is-invalid @enderror"
+                                                            type="number" name="semester" placeholder="Semester"
+                                                            value="{{ old('semester') }}">
+                                                        @error('semester')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="col-md-12 mb-1">
-                                                        <input class="form-control rounded @error('password') is-invalid @enderror" type="password" name="password"
-                                                            placeholder="Password" value="{{ old('password') }}">
-                                                            @error('password')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
+                                                        <input
+                                                            class="form-control rounded @error('password') is-invalid @enderror"
+                                                            type="password" name="password" placeholder="Password"
+                                                            value="{{ old('password') }}">
+                                                        @error('password')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                     <input type="text" name="role" value="mahasiswa" hidden>
                                                     <div class="form-button float-end mt-1 me-4 mb-3">
@@ -187,6 +199,11 @@
                                             <option value="selected">Export Selected</option>
                                         </select>
                                     </div>
+                                    @if (session('successDelete'))
+                                        <div class="alert alert-danger">
+                                            {{ session('successDelete') }}
+                                        </div>
+                                    @endif
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true"
                                         data-show-columns="true" data-show-pagination-switch="true"
                                         data-key-events="true" data-show-toggle="true" data-resizable="true"
@@ -231,12 +248,19 @@
                                                         <td>{{ '-' }}</td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-warning px-2 py-0 me-3">
+                                                        <a href="{{ route('user.edit', ['user' => $user->id]) }}"
+                                                            class="btn btn-warning px-2 py-0 me-3">
                                                             <i class="fas fa-edit pe-1"></i>Edit
                                                         </a>
 
-                                                        <a href="{{ route('user.destroy', ['user' => $user->id]) }}" class="btn btn-danger px-2 py-0 text-white">
-                                                        <i class="fas fa-trash pe-1 "></i>Delete</a>
+                                                        <form action="{{ route('user.destroy', ['user' => $user->id]) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-danger px-2 py-0 text-white"><i
+                                                                    class="fas fa-trash pe-1"></i>Delete</button>
+                                                        </form>
                                                     </td>
                                                     @php
                                                         $no++;
@@ -308,7 +332,7 @@
 
         // Simulate final import confirmation
         document.getElementById('confirm-import').addEventListener('click', function() {
-        alert('Data berhasil diimport!');
+            alert('Data berhasil diimport!');
         });
     </script>
     <!-- Jquery -->
