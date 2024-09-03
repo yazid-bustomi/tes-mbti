@@ -23,7 +23,7 @@ Aplikasi ini berbasis Laravel dan dirancang untuk mengelola dan mengadakan tes M
 1. **Clone Repositori**:
    ```bash
    git clone https://github.com/yazid-bustomi/tes-mbti.git
-   cd mbti-test-application
+   cd tes-mbti
 
 2. **Copy .env**:
     ```bash
