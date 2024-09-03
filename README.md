@@ -20,5 +20,28 @@ Aplikasi ini berbasis Laravel dan dirancang untuk mengelola dan mengadakan tes M
 
 1. **Clone Repositori**:
    ```bash
-   git clone https://github.com/username/mbti-test-application.git
+   git clone https://github.com/yazid-bustomi/tes-mbti.git
    cd mbti-test-application
+
+2. **Copy .env**:
+    ```bash
+    cp .env.example .env
+
+3. **Generate Key**:
+    ```bash
+    php artisan key:generate
+
+4. **Setting Database**:
+    - Tambahkan database baru
+    - Setting nama database .env sesuaikan dengan yang baru di buat
+    - Setelah selesai jalankan migration
+    ``` bash
+    php artisan migrate
+
+5. **Tambahkan Data Seeders**:
+    ``` bash
+    php artisan db:seed
+
+6. **Aplikasi siap di pakai**:
+    ```bash
+    php artisan serve
