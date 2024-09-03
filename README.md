@@ -95,7 +95,7 @@ Aplikasi ini berbasis Laravel dan dirancang untuk mengelola dan mengadakan tes M
 - Tombol next tidak aktif ketika belum terisi semua
 ![Tes-2](https://github.com/yazid-bustomi/tes-mbti/blob/main/screnshot-app/tes-2(ketika%20ada%20yang%20belum%20terisi).png?raw=true)
 
--Submit Tes
+- Submit Tes
 ![Submit-tes](https://github.com/yazid-bustomi/tes-mbti/blob/main/screnshot-app/submit-tes.png?raw=true)
 
 - Hasil Tes
