@@ -6,9 +6,11 @@ Aplikasi ini berbasis Laravel dan dirancang untuk mengelola dan mengadakan tes M
 
 ## Fitur
 
-- **Manajemen Pengguna**:
-  - **Akses Khusus Admin**: Hanya admin yang dapat mengekspor, mengedit, dan menambahkan data pengguna.
-  
+- **Manajemen Admin**:
+    - Tambah User
+    - Edit User
+    - Delete User
+    - Ekspor data User
 - **Akses Publik**:
   - Halaman utama menampilkan penjelasan rinci tentang semua 16 tipe kepribadian MBTI.
   - Pengguna dapat melihat tes, tetapi harus masuk untuk menyelesaikannya.
@@ -45,3 +47,51 @@ Aplikasi ini berbasis Laravel dan dirancang untuk mengelola dan mengadakan tes M
 6. **Aplikasi siap di pakai**:
     ```bash
     php artisan serve
+
+## User Login
+- Admin 
+User : admin@gmail.com
+Password : 123
+
+- User
+User : aulia@gmail.com
+Password : 123
+
+User : dimas@gmail.com
+Password : 123
+
+User : fitri@gmail.com
+Password : 123
+
+User : gilang@gmail.com
+Password : 123
+
+User : hana@gmail.com
+Password : 123
+
+User : ivan@gmail.com
+Password : 123
+
+User : joko@gmail.com
+Password : 123
+
+User : kurnia@gmail.com
+Password : 123
+
+User : lutfi@gmail.com
+Password : 123
+
+User : maya@gmail.com
+Password : 123
+
+User : nina@gmail.com
+Password : 123
+
+User : omar@gmail.com
+Password : 123
+
+User : putri@gmail.com
+Password : 123
+
+User : qori@gmail.com
+Password : 123
