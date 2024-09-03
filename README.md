@@ -95,3 +95,32 @@ Password : 123
 
 User : qori@gmail.com
 Password : 123
+
+
+## Screnshot
+- Home
+![Home](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/home.png?raw=true)
+
+- About
+![About](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/about.png?raw=true)
+
+- Pertanyaan Tes
+![Tes-1](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/tes-1.png?raw=true)
+
+- Tombol next tidak aktif ketika belum terisi semua
+![Tes-2](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/tes-2(ketika%20ada%20yang%20belum%20terisi).png?raw=true)
+
+-Submit Tes
+![Submit-tes](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/submit-tes.png?raw=true)
+
+- Hasil Tes
+![Hasil-Tes](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/hasil-tes.png?raw=true)
+
+- Manajement User
+![manajement-user](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/manajement-user.png?raw=true)
+
+- Daftar User
+![Daftar-user](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/manajement-user.png?raw=true)
+
+- Export User
+![Export-user](https://github.com/yazid-bustomi/tes-mbti/blob/main/tampilam-app/fitur-export.png?raw=true)
