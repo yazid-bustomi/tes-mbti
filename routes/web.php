@@ -17,16 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
+// route home
 Route::get('/', [HomeController::class, 'index'])->name('user-home');
-Route::get('/question', [QuestionController::class, 'index'])->name('user-question');
 
 // route question
-Route::resource('/result', ResultController::class);
+Route::get('/question', [QuestionController::class, 'index'])->name('user-question');
 
-Route::resource('/admin/user', AdminController::class);
+Route::middleware(['auth'])->group(function () {
+    // route for result
+    Route::resource('/result', ResultController::class);
 
-require __DIR__.'/auth.php';
+    // route for admin manajemen user
+    Route::resource('/admin/user', AdminController::class);
+});
+
+require __DIR__ . '/auth.php';

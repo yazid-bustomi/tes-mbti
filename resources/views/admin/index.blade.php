@@ -78,7 +78,8 @@
                                                         <select
                                                             class="form-select rounded @error('jurusan') is-invalid @enderror"
                                                             name="jurusan">
-                                                            <option selected disabled value="">Jurusan</option>
+                                                            <option selected disabled value="{{ old('jurusan') ?? '' }}">
+                                                                {{ old('jurusan') ?? 'Jurusan' }}</option>
                                                             <option value="Sistem Teknik Informatika">Sistem Teknik
                                                                 Informatika</option>
                                                             <option value="Sistem Informasi">Sistem Informasi</option>
@@ -217,6 +218,7 @@
                                                 <th data-field="email" data-editable="true">Email</th>
                                                 <th data-field="jurusan" data-editable="true">Jurusan</th>
                                                 <th data-field="semester" data-editable="true">Semester</th>
+                                                <th data-field="gender" data-editable="true">Jeni Kelamin</th>
                                                 <th data-field="result_type" data-editable="true">Hasil</th>
                                                 <th data-field="action">Action</th>
                                             </tr>
@@ -235,6 +237,7 @@
                                                         @foreach ($user->mahasiswa as $mahasiswa)
                                                             <td>{{ $mahasiswa->jurusan }}</td>
                                                             <td>{{ $mahasiswa->semester }}</td>
+                                                            <td>{{ $mahasiswa->gender }}</td>
                                                         @endforeach
                                                     @else
                                                         <td>{{ '-' }}</td>
@@ -248,18 +251,27 @@
                                                         <td>{{ '-' }}</td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ route('user.edit', ['user' => $user->id]) }}"
+                                                        <a href="#"
+                                                            onclick="editUser(
+                                                                '{{ $user->id }}',
+                                                                '{{ $user->name }}',
+                                                                '{{ $user->email }}',
+                                                                '{{ $mahasiswa->jurusan ?? '' }}',
+                                                                '{{ $mahasiswa->semester ?? '' }}',
+                                                                '{{ $mahasiswa->gender ?? '' }}')"
                                                             class="btn btn-warning px-2 py-0 me-3">
                                                             <i class="fas fa-edit pe-1"></i>Edit
                                                         </a>
 
-                                                        <form action="{{ route('user.destroy', ['user' => $user->id]) }}"
+                                                        <a onclick="confirmDelete('{{ $user->id }}')"
+                                                            class="btn btn-danger px-2 py-0 text-white"><i
+                                                                class="fas fa-trash pe-1"></i>Delete</a>
+
+                                                        <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', ['user' => $user->id]) }}" style="display: none"
                                                             method="post">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-danger px-2 py-0 text-white"><i
-                                                                    class="fas fa-trash pe-1"></i>Delete</button>
+
                                                         </form>
                                                     </td>
                                                     @php
@@ -312,6 +324,59 @@
                 reader.readAsText(file);
             }
         });
+
+        function editUser(userId, userName, userEmail, userJurusan, userSemester, userGender) {
+            Swal.fire({
+                title: 'Edit User',
+                html: `
+            <input type="text" id="swal-input1" class="swal2-input" placeholder="Name" value="${userName}">
+            <input type="email" id="swal-input2" class="swal2-input" placeholder="Email" value="${userEmail}">
+            <input type="text" id="swal-input3" class="swal2-input" placeholder="Jurusan" value="${userJurusan}">
+            <input type="text" id="swal-input4" class="swal2-input" placeholder="Semester" value="${userSemester}">
+            <select id="swal-input5" class="swal2-input">
+                <option value="Male" ${userGender === 'Male' ? 'selected' : ''}>Male</option>
+                <option value="Female" ${userGender === 'Female' ? 'selected' : ''}>Female</option>
+            </select>
+        `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                cancelButtonText: 'Cancel',
+                preConfirm: () => {
+                    const name = document.getElementById('swal-input1').value;
+                    const email = document.getElementById('swal-input2').value;
+                    const jurusan = document.getElementById('swal-input3').value;
+                    const semester = document.getElementById('swal-input4').value;
+                    const gender = document.getElementById('swal-input5').value;
+
+                    if (!name || !email || !jurusan || !semester || !gender) {
+                        Swal.showValidationMessage('All fields are required');
+                        return false;
+                    }
+
+                    // Redirect with userId as part of the URL and other data as query parameters
+                    const editUrl =
+                        `/admin/user/${userId}/edit?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&jurusan=${encodeURIComponent(jurusan)}&semester=${encodeURIComponent(semester)}&gender=${encodeURIComponent(gender)}`;
+                    window.location.href = editUrl;
+                }
+            });
+        }
+
+        function confirmDelete(userId) {
+            Swal.fire({
+                title: "Anda Yakin Ingin Menghapus ?",
+                text: "Data tidak bisa di kembalikan setelah di hapus",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, Hapus!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + userId).submit();
+                }
+            });
+        }
 
         // Handle template download
         document.getElementById('download-template').addEventListener('click', function() {

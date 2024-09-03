@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreadminRequest;
 use App\Models\Result;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
@@ -20,12 +22,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $idUser = Auth::user()->id;
             $userResult = Result::where('user_id', $idUser)->get();
 
             View::share('userResult', $userResult);
-        }else{
+        } else {
             View::share('userResult', null);
         }
 
@@ -51,45 +53,39 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreadminRequest $request)
     {
-        // validation
-        $rules = [
-            'name' => 'required',
-            'email' => 'unique:users,email',
-            'jurusan' => 'required',
-            'semester' => 'required|numeric',
-            'password' => 'required|min:8'
-        ];
+        try {
+            /**
+             * save ke database
+             */
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        $message = [
-            'name.required' => 'Nama Wajib di Isi',
-            'email.unique' => 'Email atau NIM sudah terdaftar',
-            'jurusan.required' => 'Jurusan wajib di isi',
-            'semester.required' => 'Semester wajib di isi',
-            'semester.numeric' => 'Semester wajib berupa nangka',
-            'password.required' => 'Password wajib di isi',
-            'password.min' => 'Password minimal 8 karakter'
-        ];
+            DB::table('mahasiswa')->insert([
+                'user_id' => $user->id,
+                'semester' => $request->semester,
+                'jurusan' => $request->jurusan,
+            ]);
 
-        $validated = Validator::make($request->all(),$rules,$message);
-
-        if($validated->fails()){
-            return redirect()->back()->withErrors($validated)->withInput();
+            /**
+             * jika semua transaksi ke database telah berhasil
+             */
+            Log::info('Success message sent');
+            return redirect()->route('user.index')->with('success', 'User berhasil di tambahkan');
+        } catch (\Throwable $th) {
+            /**
+             * Show log error with input database
+             * rollback jika error dan mengembalikan errornya
+             */
+            Log::error($th);
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to create user');
         }
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
 
-        DB::table('mahasiswas')->insert([
-            'user_id' => $user->id,
-            'semester' => $request->semester,
-            'jurusan' => $request->jurusan,
-        ]);
-
-        return redirect()->route('user.index')->with('success', 'User berhasil di tambahkan');
     }
 
     /**
@@ -111,7 +107,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+
     }
 
     /**
@@ -123,7 +119,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
     /**

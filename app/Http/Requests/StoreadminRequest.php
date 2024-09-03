@@ -24,7 +24,24 @@ class StoreadminRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'email' => 'unique:users,email',
+            'jurusan' => 'required',
+            'semester' => 'required|numeric',
+            'password' => 'required|min:8'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nama Wajib di Isi',
+            'email.unique' => 'Email atau NIM sudah terdaftar',
+            'jurusan.required' => 'Jurusan wajib di isi',
+            'semester.required' => 'Semester wajib di isi',
+            'semester.numeric' => 'Semester wajib berupa nangka',
+            'password.required' => 'Password wajib di isi',
+            'password.min' => 'Password minimal 8 karakter'
         ];
     }
 }

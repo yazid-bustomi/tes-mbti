@@ -18,6 +18,7 @@ class CreateMahasiswasTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('semester')->nullable();
             $table->string('jurusan')->nullable();
+            $table->enum('gender', ['laki-laki', 'perempuan']);
             $table->timestamps();
         });
     }
