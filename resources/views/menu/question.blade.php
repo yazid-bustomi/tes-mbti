@@ -74,20 +74,21 @@
                     @endforeach
 
                     <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary me-5" id="prevBtn"
-                            onclick="changePage(-1)">Previous</button>
-                        <button type="button" class="btn btn-secondary" id="nextBtn"
-                            onclick="changePage(1)">Next</button>
-                        @if (Auth::check())
+                            @if (Auth::check())
+                            <button type="button" class="btn btn-secondary me-5" id="prevBtn"
+                                onclick="changePage(-1)">Previous</button>
+                            <button type="button" class="btn btn-secondary" id="nextBtn"
+                                onclick="changePage(1)">Next</button>
                             <button type="submit" class="btn btn-primary ms-5 d-none" id="submitBtn">Submit</button>
-                        @else
-                            <button type="submit" class="btn btn-primary ms-5 d-none"
-                                disabled>Submit</button>
-                        @endif
-                    </div>
-                </form>
+                            @else
+                            <div class="alert alert-danger wow fadeInUp">
+                                <div>Silahkan Login Untuk Melanjutkan Tes</div>
+                            </div>
+                    @endif
             </div>
+            </form>
         </div>
+    </div>
     </div>
     <!-- Question End -->
 @endsection

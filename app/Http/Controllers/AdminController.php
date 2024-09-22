@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreadminRequest;
+use App\Models\Mahasiswa;
 use App\Models\Result;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,16 +39,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -60,8 +51,8 @@ class AdminController extends Controller
              * save ke database
              */
             $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
+                'username' => $request->username,
+                'nim' => $request->nim,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -85,7 +76,6 @@ class AdminController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Failed to create user');
         }
-
     }
 
     /**
@@ -107,7 +97,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-
+        // dd()
     }
 
     /**
@@ -119,7 +109,33 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        // Validasi input yang dikirimkan dari AJAX
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,',
+            'jurusan' => 'nullable|string',
+            'semester' => 'nullable|integer',
+            'gender' => 'nullable|string',
+        ]);
+
+        // Update data user
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        // Update data mahasiswa (jika ada)
+        $mahasiswa = Mahasiswa::where('user_id', $id)->first();
+        if ($mahasiswa) {
+            $mahasiswa->update([
+                'jurusan' => $request->jurusan,
+                'semester' => $request->semester,
+                'gender' => $request->gender,
+            ]);
+        }
+
+        return response()->json(['message' => 'User updated successfully']);
     }
 
     /**

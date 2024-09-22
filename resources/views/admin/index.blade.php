@@ -64,10 +64,10 @@
 
                                                     <div class="col-md-12 mb-1">
                                                         <input
-                                                            class="form-control rounded @error('email') is-invalid @enderror"
-                                                            type="email" name="email" placeholder="E-mail Address"
-                                                            value="{{ old('email') }}">
-                                                        @error('email')
+                                                            class="form-control rounded @error('username') is-invalid @enderror"
+                                                            type="username" name="username" placeholder="E-mail atau Nim"
+                                                            value="{{ old('username') }}">
+                                                        @error('username')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
                                                             </span>
@@ -215,7 +215,7 @@
                                                 <th data-field="state" data-checkbox="true"></th>
                                                 <th data-field="id">No</th>
                                                 <th data-field="name" data-editable="true">Nama</th>
-                                                <th data-field="email" data-editable="true">Email</th>
+                                                <th data-field="username" data-editable="true">Username</th>
                                                 <th data-field="jurusan" data-editable="true">Jurusan</th>
                                                 <th data-field="semester" data-editable="true">Semester</th>
                                                 <th data-field="gender" data-editable="true">Jeni Kelamin</th>
@@ -232,7 +232,7 @@
                                                     <td></td>
                                                     <td>{{ $no }}</td>
                                                     <td class="text-decoration-none">{{ $user->name }}</td>
-                                                    <td>{{ $user->email }}</td>
+                                                    <td>{{ $user->username }}</td>
                                                     @if ($user->mahasiswa->isNotEmpty())
                                                         @foreach ($user->mahasiswa as $mahasiswa)
                                                             <td>{{ $mahasiswa->jurusan }}</td>
@@ -255,7 +255,7 @@
                                                             onclick="editUser(
                                                                 '{{ $user->id }}',
                                                                 '{{ $user->name }}',
-                                                                '{{ $user->email }}',
+                                                                '{{ $user->username }}',
                                                                 '{{ $mahasiswa->jurusan ?? '' }}',
                                                                 '{{ $mahasiswa->semester ?? '' }}',
                                                                 '{{ $mahasiswa->gender ?? '' }}')"
@@ -267,8 +267,9 @@
                                                             class="btn btn-danger px-2 py-0 text-white"><i
                                                                 class="fas fa-trash pe-1"></i>Delete</a>
 
-                                                        <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', ['user' => $user->id]) }}" style="display: none"
-                                                            method="post">
+                                                        <form id="delete-form-{{ $user->id }}"
+                                                            action="{{ route('user.destroy', ['user' => $user->id]) }}"
+                                                            style="display: none" method="post">
                                                             @csrf
                                                             @method('DELETE')
 
@@ -325,17 +326,17 @@
             }
         });
 
-        function editUser(userId, userName, userEmail, userJurusan, userSemester, userGender) {
+        function editUser(userId, name, userName, userJurusan, userSemester, userGender) {
             Swal.fire({
                 title: 'Edit User',
                 html: `
-            <input type="text" id="swal-input1" class="swal2-input" placeholder="Name" value="${userName}">
-            <input type="email" id="swal-input2" class="swal2-input" placeholder="Email" value="${userEmail}">
+            <input type="text" id="swal-input1" class="swal2-input" placeholder="Name" value="${name}">
+            <input type="text" id="swal-input1" class="swal2-input" placeholder="Name" value="${userName}" readonly>
             <input type="text" id="swal-input3" class="swal2-input" placeholder="Jurusan" value="${userJurusan}">
             <input type="text" id="swal-input4" class="swal2-input" placeholder="Semester" value="${userSemester}">
-            <select id="swal-input5" class="swal2-input">
-                <option value="Male" ${userGender === 'Male' ? 'selected' : ''}>Male</option>
-                <option value="Female" ${userGender === 'Female' ? 'selected' : ''}>Female</option>
+            <select id="swal-input5" class="swal2-input mt-3">
+                <option value="laki-laki" ${userGender === 'laki-laki' ? 'selected' : ''}>Laki - Laki</option>
+                <option value="perempuan" ${userGender === 'perempuan' ? 'selected' : ''}>Perempuan</option>
             </select>
         `,
                 focusConfirm: false,
@@ -354,13 +355,41 @@
                         return false;
                     }
 
-                    // Redirect with userId as part of the URL and other data as query parameters
-                    const editUrl =
-                        `/admin/user/${userId}/edit?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&jurusan=${encodeURIComponent(jurusan)}&semester=${encodeURIComponent(semester)}&gender=${encodeURIComponent(gender)}`;
-                    window.location.href = editUrl;
+                    return {
+                        name: name,
+                        email: email,
+                        jurusan: jurusan,
+                        semester: semester,
+                        gender: gender
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim data ke server menggunakan AJAX
+                    $.ajax({
+                        url: `/admin/user/${userId}`, // Endpoint update user
+                        method: 'PUT', // Karena ini update
+                        data: {
+                            _token: '{{ csrf_token() }}', // Token CSRF untuk keamanan
+                            name: result.value.name,
+                            email: result.value.email,
+                            jurusan: result.value.jurusan,
+                            semester: result.value.semester,
+                            gender: result.value.gender
+                        },
+                        // success: function(response) {
+                        //     Swal.fire('Success', 'User updated successfully', 'success').then(() => {
+                        //         location.reload(); // Refresh halaman setelah berhasil update
+                        //     });
+                        // },
+                        // error: function() {
+                        //     Swal.fire('Error', 'There was a problem updating the user', 'error');
+                        // }
+                    });
                 }
             });
         }
+
 
         function confirmDelete(userId) {
             Swal.fire({

@@ -26,14 +26,36 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request)
+    // public function store(LoginRequest $request)
+    // {
+    //     $request->authenticate();
+
+    //     $request->session()->regenerate();
+
+        
+    // }
+
+    public function store(Request $request)
     {
-        $request->authenticate();
+        $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
 
-        $request->session()->regenerate();
+        $credentials = $request->only('username', 'password');
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            // return redirect()->intended('dashboard');
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        return back()->withErrors([
+            'username' => 'The provided credentials do not match our records.',
+        ]);
     }
+
 
     /**
      * Destroy an authenticated session.
@@ -51,4 +73,5 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+   
 }
