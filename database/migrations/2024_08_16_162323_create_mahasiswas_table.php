@@ -19,6 +19,7 @@ class CreateMahasiswasTable extends Migration
             $table->integer('semester')->nullable();
             $table->string('jurusan')->nullable();
             $table->enum('gender', ['laki-laki', 'perempuan']);
+            $table->string('birthdate')->nullable();
             $table->timestamps();
         });
     }

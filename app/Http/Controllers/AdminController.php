@@ -47,36 +47,34 @@ class AdminController extends Controller
     public function store(StoreadminRequest $request)
     {
         try {
-            /**
-             * save ke database
-             */
+            // Simpan user ke table users
             $user = User::create([
+                'name' => $request->name,
                 'username' => $request->username,
-                'nim' => $request->nim,
                 'password' => Hash::make($request->password),
+                'role' => $request->role,
             ]);
-
+    
+            // Simpan data mahasiswa ke table mahasiswa
             DB::table('mahasiswa')->insert([
                 'user_id' => $user->id,
                 'semester' => $request->semester,
                 'jurusan' => $request->jurusan,
+                'gender' => $request->gender,
+                'birthdate' => $request->birthdate,
             ]);
-
-            /**
-             * jika semua transaksi ke database telah berhasil
-             */
-            Log::info('Success message sent');
-            return redirect()->route('user.index')->with('success', 'User berhasil di tambahkan');
-        } catch (\Throwable $th) {
-            /**
-             * Show log error with input database
-             * rollback jika error dan mengembalikan errornya
-             */
-            Log::error($th);
+    
+            return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan');
+        } catch (\Exception $e) {
+            Log::error('Gagal menyimpan data: ' . $e->getMessage());
+    return redirect()->back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
+    
+            // Jika ada error, rollback dan tampilkan pesan error
             DB::rollBack();
-            return redirect()->back()->with('error', 'Failed to create user');
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+    
 
     /**
      * Display the specified resource.
@@ -109,10 +107,11 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request->all());
         // Validasi input yang dikirimkan dari AJAX
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,',
+            'username' => 'required|unique:users,username,',
             'jurusan' => 'nullable|string',
             'semester' => 'nullable|integer',
             'gender' => 'nullable|string',
@@ -122,7 +121,7 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
         $user->update([
             'name' => $request->name,
-            'email' => $request->email,
+            'username' => $request->username,
         ]);
 
         // Update data mahasiswa (jika ada)

@@ -47,6 +47,16 @@
                                                         {{ session('success') }}
                                                     </div>
                                                 @endif
+                                                @if ($errors->any())
+                                                    <div class="alert alert-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <li>{{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+
                                                 <form action="{{ route('user.store') }}" method="POST"
                                                     class="requires-validation" novalidate>
                                                     @csrf
@@ -65,7 +75,7 @@
                                                     <div class="col-md-12 mb-1">
                                                         <input
                                                             class="form-control rounded @error('username') is-invalid @enderror"
-                                                            type="username" name="username" placeholder="E-mail atau Nim"
+                                                            type="text" name="username" placeholder="Username"
                                                             value="{{ old('username') }}">
                                                         @error('username')
                                                             <span class="invalid-feedback" role="alert">
@@ -105,6 +115,39 @@
                                                     </div>
 
                                                     <div class="col-md-12 mb-1">
+                                                        <select
+                                                            class="form-select rounded @error('gender') is-invalid @enderror"
+                                                            name="gender">
+                                                            <option selected disabled value="{{ old('gender') ?? '' }}">
+                                                                {{ old('gender') ?? 'Pilih Gender' }}</option>
+                                                            <option value="laki-laki"
+                                                                {{ old('gender') == 'laki-laki' ? 'selected' : '' }}>
+                                                                Laki-laki</option>
+                                                            <option value="perempuan"
+                                                                {{ old('gender') == 'perempuan' ? 'selected' : '' }}>
+                                                                Perempuan</option>
+                                                        </select>
+                                                        @error('gender')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-1">
+                                                        <input
+                                                            class="form-control rounded @error('birthdate') is-invalid @enderror"
+                                                            type="date" name="birthdate" placeholder="Tanggal Lahir"
+                                                            value="{{ old('birthdate') }}">
+                                                        @error('birthdate')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+
+
+                                                    <div class="col-md-12 mb-1">
                                                         <input
                                                             class="form-control rounded @error('password') is-invalid @enderror"
                                                             type="password" name="password" placeholder="Password"
@@ -140,7 +183,8 @@
                                                 <form class="requires-validation" id="import-form" novalidate
                                                     enctype="multipart/form-data">
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="import-file" class="form-label">Upload CSV File</label>
+                                                        <label for="import-file" class="form-label">Upload CSV
+                                                            File</label>
                                                         <input class="form-control" type="file" name="import-file"
                                                             id="import-file" accept=".csv" required>
                                                     </div>
@@ -218,6 +262,7 @@
                                                 <th data-field="username" data-editable="true">Username</th>
                                                 <th data-field="jurusan" data-editable="true">Jurusan</th>
                                                 <th data-field="semester" data-editable="true">Semester</th>
+                                                <th data-field="birtdate" data-editable="true">Tanggal Lahir</th>
                                                 <th data-field="gender" data-editable="true">Jeni Kelamin</th>
                                                 <th data-field="result_type" data-editable="true">Hasil</th>
                                                 <th data-field="action">Action</th>
@@ -237,6 +282,7 @@
                                                         @foreach ($user->mahasiswa as $mahasiswa)
                                                             <td>{{ $mahasiswa->jurusan }}</td>
                                                             <td>{{ $mahasiswa->semester }}</td>
+                                                            <td>{{ $mahasiswa->birthdate }}</td>
                                                             <td>{{ $mahasiswa->gender }}</td>
                                                         @endforeach
                                                     @else
@@ -258,6 +304,7 @@
                                                                 '{{ $user->username }}',
                                                                 '{{ $mahasiswa->jurusan ?? '' }}',
                                                                 '{{ $mahasiswa->semester ?? '' }}',
+                                                                '{{ $mahasiswa->birthdate ?? '' }}',
                                                                 '{{ $mahasiswa->gender ?? '' }}')"
                                                             class="btn btn-warning px-2 py-0 me-3">
                                                             <i class="fas fa-edit pe-1"></i>Edit
@@ -326,15 +373,17 @@
             }
         });
 
-        function editUser(userId, name, userName, userJurusan, userSemester, userGender) {
+        function editUser(userId, name, userName, userJurusan, userSemester, userGender, birthdate) {
+
             Swal.fire({
                 title: 'Edit User',
                 html: `
-            <input type="text" id="swal-input1" class="swal2-input" placeholder="Name" value="${name}">
-            <input type="text" id="swal-input1" class="swal2-input" placeholder="Name" value="${userName}" readonly>
-            <input type="text" id="swal-input3" class="swal2-input" placeholder="Jurusan" value="${userJurusan}">
-            <input type="text" id="swal-input4" class="swal2-input" placeholder="Semester" value="${userSemester}">
-            <select id="swal-input5" class="swal2-input mt-3">
+            <input type="text" id="swal-input-name" class="swal2-input" placeholder="Name" value="${name}">
+            <input type="text" id="swal-input-username" class="swal2-input" placeholder="Username" value="${userName}" readonly>
+            <input type="text" id="swal-input-jurusan" class="swal2-input" placeholder="Jurusan" value="${userJurusan}">
+            <input type="text" id="swal-input-semester" class="swal2-input" placeholder="Semester" value="${userSemester}">
+            <input type="date" id="swal-input-birthdate" class="swal2-input" placeholder="Tanggal Lahir" value="${birthdate}">
+            <select id="swal-input-gender" class="swal2-input mt-3">
                 <option value="laki-laki" ${userGender === 'laki-laki' ? 'selected' : ''}>Laki - Laki</option>
                 <option value="perempuan" ${userGender === 'perempuan' ? 'selected' : ''}>Perempuan</option>
             </select>
@@ -344,23 +393,25 @@
                 confirmButtonText: 'Save',
                 cancelButtonText: 'Cancel',
                 preConfirm: () => {
-                    const name = document.getElementById('swal-input1').value;
-                    const email = document.getElementById('swal-input2').value;
-                    const jurusan = document.getElementById('swal-input3').value;
-                    const semester = document.getElementById('swal-input4').value;
-                    const gender = document.getElementById('swal-input5').value;
+                    const name = document.getElementById('swal-input-name').value;
+                    const username = document.getElementById('swal-input-username').value;
+                    const jurusan = document.getElementById('swal-input-jurusan').value;
+                    const semester = document.getElementById('swal-input-semester').value;
+                    const birthdate = document.getElementById('swal-input-birthdate').value;
+                    const gender = document.getElementById('swal-input-gender').value;
 
-                    if (!name || !email || !jurusan || !semester || !gender) {
+                    if (!name || !username || !jurusan || !semester || !birthdate || !gender) {
                         Swal.showValidationMessage('All fields are required');
                         return false;
                     }
 
                     return {
                         name: name,
-                        email: email,
+                        username: username,
                         jurusan: jurusan,
                         semester: semester,
-                        gender: gender
+                        birthdate: birthdate,
+                        gender: gender,
                     };
                 }
             }).then((result) => {
@@ -372,23 +423,25 @@
                         data: {
                             _token: '{{ csrf_token() }}', // Token CSRF untuk keamanan
                             name: result.value.name,
-                            email: result.value.email,
+                            username: result.value.username,
                             jurusan: result.value.jurusan,
                             semester: result.value.semester,
+                            birthdate: result.value.birthdate,
                             gender: result.value.gender
                         },
-                        // success: function(response) {
-                        //     Swal.fire('Success', 'User updated successfully', 'success').then(() => {
-                        //         location.reload(); // Refresh halaman setelah berhasil update
-                        //     });
-                        // },
-                        // error: function() {
-                        //     Swal.fire('Error', 'There was a problem updating the user', 'error');
-                        // }
+                        success: function(response) {
+                            Swal.fire('Success', 'User updated successfully', 'success').then(() => {
+                                location.reload(); // Refresh halaman setelah berhasil update
+                            });
+                        },
+                        error: function() {
+                            Swal.fire('Error', 'There was a problem updating the user', 'error');
+                        }
                     });
                 }
             });
         }
+
 
 
         function confirmDelete(userId) {

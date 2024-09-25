@@ -24,11 +24,13 @@ class StoreadminRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'unique:users,email',
-            'jurusan' => 'required',
-            'semester' => 'required|numeric',
-            'password' => 'required|min:8'
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'jurusan' => 'required|string',
+            'semester' => 'required|integer|min:1',
+            'gender' => 'required|in:laki-laki,perempuan',
+            'birthdate' => 'required|date',
         ];
     }
 
@@ -36,8 +38,11 @@ class StoreadminRequest extends FormRequest
     {
         return [
             'name.required' => 'Nama Wajib di Isi',
-            'email.unique' => 'Email atau NIM sudah terdaftar',
+            'username.unique' => 'Username sudah terdaftar',
+            'username.required' => 'Username wajib di isi',
             'jurusan.required' => 'Jurusan wajib di isi',
+            'gender.required' => 'Jenis Kelamin wajib di isi',
+            'birthdate.required' => 'Tanggal Lahir wajib di isi',
             'semester.required' => 'Semester wajib di isi',
             'semester.numeric' => 'Semester wajib berupa nangka',
             'password.required' => 'Password wajib di isi',
