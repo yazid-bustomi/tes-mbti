@@ -47,15 +47,6 @@
                                                         {{ session('success') }}
                                                     </div>
                                                 @endif
-                                                @if ($errors->any())
-                                                    <div class="alert alert-danger">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                                <li>{{ $error }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
 
                                                 <form action="{{ route('user.store') }}" method="POST"
                                                     class="requires-validation" novalidate>
@@ -208,10 +199,12 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Full Name</th>
-                                                                <th>Email</th>
+                                                                <th>Username</th>
                                                                 <th>Jurusan</th>
                                                                 <th>Semester</th>
-                                                                <th>Gender</th>
+                                                                <th>Umur</th>
+                                                                <th>Jenis Kelamin</th>
+                                                                <th>Hasil</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="imported-data"></tbody>
@@ -262,7 +255,7 @@
                                                 <th data-field="username" data-editable="true">Username</th>
                                                 <th data-field="jurusan" data-editable="true">Jurusan</th>
                                                 <th data-field="semester" data-editable="true">Semester</th>
-                                                <th data-field="birtdate" data-editable="true">Tanggal Lahir</th>
+                                                <th data-field="birtdate" data-editable="true">Umur</th>
                                                 <th data-field="gender" data-editable="true">Jeni Kelamin</th>
                                                 <th data-field="result_type" data-editable="true">Hasil</th>
                                                 <th data-field="action">Action</th>
@@ -282,7 +275,8 @@
                                                         @foreach ($user->mahasiswa as $mahasiswa)
                                                             <td>{{ $mahasiswa->jurusan }}</td>
                                                             <td>{{ $mahasiswa->semester }}</td>
-                                                            <td>{{ $mahasiswa->birthdate }}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($mahasiswa->birthdate)->age }} tahun</td>
+                                                            {{-- <td>{{ $mahasiswa->birthdate }}</td> --}}
                                                             <td>{{ $mahasiswa->gender }}</td>
                                                         @endforeach
                                                     @else

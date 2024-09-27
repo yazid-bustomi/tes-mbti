@@ -73,10 +73,14 @@
                                 class="fa fa-sign-out-alt  me-1"></i>Logout</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}"
+                    {{-- <a href="{{ route('login') }}"
                         class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0"><i
                             class="fa fa-sign-in-alt  me-1"></i>Login
-                    </a>
+                    </a> --}}
+
+                    <button id="loginButton" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">
+                        <i class="fa fa-sign-in-alt me-1"></i> Login
+                    </button>
                 @endif
             </div>
         </nav>
@@ -108,6 +112,47 @@
     </a>
 
     @yield('script')
+
+    <script>
+        document.getElementById('loginButton').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Silahkan Login',
+                html: `
+            <form id="loginForm" method="POST">
+                @csrf
+                <div class="form-group">
+                    <input id="username" class="form-control" type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group mt-3">
+                    <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
+                </div>
+            </form>`,
+                showCancelButton: true,
+                confirmButtonText: 'Login',
+                cancelButtonText: 'Cancel',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    if (!username || !password) {
+                        Swal.showValidationMessage('Please enter both username and password');
+                        return false;
+                    }
+                    return {
+                        username: username,
+                        password: password
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.getElementById('loginForm');
+                    form.action = "{{ route('login') }}";
+                    form.method = "POST";
+                    form.submit(); // Submit the form
+                }
+            });
+        });
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

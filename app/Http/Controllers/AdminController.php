@@ -47,6 +47,9 @@ class AdminController extends Controller
     public function store(StoreadminRequest $request)
     {
         try {
+            // Mulai transaksi
+            DB::beginTransaction();
+
             // Simpan user ke table users
             $user = User::create([
                 'name' => $request->name,
@@ -54,27 +57,28 @@ class AdminController extends Controller
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
             ]);
-    
+
             // Simpan data mahasiswa ke table mahasiswa
-            DB::table('mahasiswa')->insert([
+            DB::table('mahasiswas')->insert([
                 'user_id' => $user->id,
                 'semester' => $request->semester,
                 'jurusan' => $request->jurusan,
                 'gender' => $request->gender,
                 'birthdate' => $request->birthdate,
             ]);
-    
+
+            // Komit transaksi
+            DB::commit();
+
             return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan');
         } catch (\Exception $e) {
-            Log::error('Gagal menyimpan data: ' . $e->getMessage());
-    return redirect()->back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
-    
             // Jika ada error, rollback dan tampilkan pesan error
             DB::rollBack();
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            Log::error('Gagal menyimpan data: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
         }
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -107,34 +111,47 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
-        // Validasi input yang dikirimkan dari AJAX
+        // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|unique:users,username,',
-            'jurusan' => 'nullable|string',
-            'semester' => 'nullable|integer',
-            'gender' => 'nullable|string',
+            'username' => 'required|unique:users,username,' . $id, // Mengecualikan user saat ini
+            'jurusan' => 'nullable|string|max:255',
+            'semester' => 'nullable|integer|min:1', // Semester minimal 1
+            'gender' => 'nullable|string|in:laki-laki,perempuan', // Misalnya, gender harus salah satu dari ini
         ]);
 
-        // Update data user
-        $user = User::findOrFail($id);
-        $user->update([
-            'name' => $request->name,
-            'username' => $request->username,
-        ]);
+        try {
+            // Mulai transaction
+            DB::beginTransaction();
 
-        // Update data mahasiswa (jika ada)
-        $mahasiswa = Mahasiswa::where('user_id', $id)->first();
-        if ($mahasiswa) {
-            $mahasiswa->update([
-                'jurusan' => $request->jurusan,
-                'semester' => $request->semester,
-                'gender' => $request->gender,
+            // Update data user
+            $user = User::findOrFail($id);
+            $user->update([
+                'name' => $request->name,
+                'username' => $request->username,
             ]);
-        }
 
-        return response()->json(['message' => 'User updated successfully']);
+            // Update data mahasiswa (jika ada)
+            $mahasiswa = Mahasiswa::where('user_id', $id)->first();
+            if ($mahasiswa) {
+                $mahasiswa->update([
+                    'jurusan' => $request->jurusan ?? $mahasiswa->jurusan, // Tetap gunakan nilai lama jika null
+                    'semester' => $request->semester ?? $mahasiswa->semester,
+                    'gender' => $request->gender ?? $mahasiswa->gender,
+                ]);
+            }
+
+            // Commit transaction
+            DB::commit();
+
+            return response()->json(['message' => 'User updated successfully']);
+        } catch (\Exception $e) {
+            // Rollback transaction jika ada error
+            DB::rollBack();
+            Log::error('Error updating user: ' . $e->getMessage());
+
+            return response()->json(['error' => 'Gagal mengupdate data', 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**
