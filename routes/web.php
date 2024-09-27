@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
@@ -29,6 +30,9 @@ Route::middleware(['auth'])->group(function () {
 
     // route for admin manajemen user
     Route::resource('/admin/user', AdminController::class);
+
+    // Route::get('/account', [AccountController::class,'index'])->name('');
+    Route::resource('/account', AccountController::class);
 });
 
 require __DIR__ . '/auth.php';

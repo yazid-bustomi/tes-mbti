@@ -63,6 +63,11 @@
                             <a href="{{ route('user.index') }}"
                                 class="nav-item nav-link {{ Request::routeIs('user.index') ? 'active' : '' }} ">Manajemen</a>
                         @endif
+                        @if (Auth::user()->role == 'mahasiswa')
+                        <a href="{{ route('account.index') }}"
+                        class="nav-item nav-link {{ Request::routeIs('account.index') ? 'active' : '' }} ">Profile</a>
+                        @endif
+                        
                     @endauth
                 </div>
                 @if (Auth::check())

@@ -51,7 +51,7 @@
                                                 <form action="{{ route('user.store') }}" method="POST"
                                                     class="requires-validation" novalidate>
                                                     @csrf
-                                                    <div class="col-md-12 mb-1">
+                                                    <div class="col-md-12 mb-3">
                                                         <input
                                                             class="form-control rounded @error('name') is-invalid @enderror"
                                                             type="text" name="name" placeholder="Full Name"
@@ -63,7 +63,7 @@
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-md-12 mb-1">
+                                                    <div class="col-md-12 mb-3">
                                                         <input
                                                             class="form-control rounded @error('username') is-invalid @enderror"
                                                             type="text" name="username" placeholder="Username"
@@ -75,7 +75,7 @@
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-md-12 mb-1">
+                                                    <div class="col-md-12 mb-3">
                                                         <select
                                                             class="form-select rounded @error('jurusan') is-invalid @enderror"
                                                             name="jurusan">
@@ -93,7 +93,7 @@
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-md-12 mb-1">
+                                                    <div class="col-md-12 mb-3">
                                                         <input
                                                             class="form-control rounded @error('semester') is-invalid @enderror"
                                                             type="number" name="semester" placeholder="Semester"
@@ -105,7 +105,7 @@
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-md-12 mb-1">
+                                                    <div class="col-md-12 mb-3">
                                                         <select
                                                             class="form-select rounded @error('gender') is-invalid @enderror"
                                                             name="gender">
@@ -125,7 +125,7 @@
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-md-12 mb-1">
+                                                    <div class="col-md-12 mb-3">
                                                         <input
                                                             class="form-control rounded @error('birthdate') is-invalid @enderror"
                                                             type="date" name="birthdate" placeholder="Tanggal Lahir"
@@ -138,7 +138,7 @@
                                                     </div>
 
 
-                                                    <div class="col-md-12 mb-1">
+                                                    <div class="col-md-12 mb-3">
                                                         <input
                                                             class="form-control rounded @error('password') is-invalid @enderror"
                                                             type="password" name="password" placeholder="Password"
