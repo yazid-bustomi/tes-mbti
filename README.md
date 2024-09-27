@@ -50,36 +50,11 @@ Aplikasi ini berbasis Laravel dan dirancang untuk mengelola dan mengadakan tes M
 
 ## User Login
 **Admin** 
-- User : admin@gmail.com Password : 123
+- User : admin Password : 123
 
 **User**
-- User : aulia@gmail.com Password : 123
+- User : user Password : 123
 
-- User : dimas@gmail.com Password : 123
-
-- User : fitri@gmail.com Password : 123
-
-- User : gilang@gmail.com Password : 123
-
-- User : hana@gmail.com Password : 123
-
-- User : ivan@gmail.com Password : 123
-
-- User : joko@gmail.com Password : 123
-
-- User : kurnia@gmail.com Password : 123
-
-- User : lutfi@gmail.com Password : 123
-
-- User : maya@gmail.com Password : 123
-
-- User : nina@gmail.com Password : 123
-
-- User : omar@gmail.com Password : 123
-
-- User : putri@gmail.com Password : 123
-
-- User : qori@gmail.com Password : 123
 
 
 ## Screnshot
